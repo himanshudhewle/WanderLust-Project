@@ -1,0 +1,519 @@
+<style>
+  /* WANDERLUST NAVBAR*/
+  .wl-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 12px 0;
+  }
+
+  /* BRAND */
+  .wl-brand {
+    color: #fe424d !important;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 0;
+  }
+
+  /* DESKTOP NAVBAR CONTENT */
+  @media (min-width: 992px) {
+    .wl-navbar .container {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wl-navbar .navbar-collapse {
+      display: flex !important;
+      flex: 1 1 auto;
+      min-width: 0;
+      align-items: center;
+    }
+  }
+
+  /* EXPLORE LINK*/
+
+  .wl-explore-link {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 5px;
+
+    padding: 9px 12px;
+
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border-radius: 25px;
+    transition: 0.2s ease;
+  }
+
+  .wl-explore-link:hover {
+    color: #fe424d;
+    background: #f7f7f7;
+  }
+
+  /* PREMIUM SEARCH BAR */
+
+  .wl-search {
+    display: flex;
+    align-items: center;
+
+    flex: 1 1 auto;
+    min-width: 150px;
+    max-width: 480px;
+
+    height: 50px;
+    padding: 4px;
+    margin: 0 auto;
+
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 50px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .wl-search:hover {
+    border-color: #d5d5d5;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .wl-search:focus-within {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+  }
+
+  /* LOCATION ICON */
+  .wl-search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 38px;
+    height: 40px;
+
+    color: #fe424d;
+    font-size: 1rem;
+  }
+
+  /* INPUT */
+  .wl-search-input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+
+    padding: 0 6px;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: #222;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .wl-search-input::placeholder {
+    color: #999;
+    font-weight: 400;
+    opacity: 1;
+  }
+
+  .wl-search-input:focus {
+    border: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* CLEAR SEARCH */
+  .wl-search-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 30px;
+    height: 30px;
+
+    color: #888;
+    text-decoration: none;
+    border-radius: 50%;
+
+    transition: 0.2s ease;
+  }
+
+  .wl-search-clear:hover {
+    color: #fe424d;
+    background: #fff1f2;
+  }
+
+  /* SEARCH BUTTON */
+  .wl-search-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    flex: 0 0 auto;
+    height: 40px;
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 30px;
+
+    background: #fe424d;
+    color: #fff;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .wl-search-button:hover {
+    background: #e93643;
+    box-shadow: 0 3px 10px rgba(254, 66, 77, 0.2);
+  }
+
+  .wl-search-button:active {
+    transform: scale(0.96);
+  }
+
+  /* RIGHT NAVIGATION ACTIONS*/
+
+  .wl-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  /* LIST YOUR HOME */
+  .wl-host-btn {
+    padding: 9px 14px;
+    border-radius: 25px;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+  }
+
+  /* ACCOUNT BUTTON */
+  .wl-account-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #ddd;
+    border-radius: 50%;
+
+    background: #fff;
+    color: #333;
+    font-size: 1.2rem;
+
+    transition: 0.2s ease;
+  }
+
+  .wl-account-btn:hover,
+  .wl-account-btn[aria-expanded='true'] {
+    border-color: #fe424d;
+    color: #fe424d;
+  }
+
+  /* ACCOUNT DROPDOWN */
+  .wl-navbar .dropdown-menu {
+    min-width: 180px;
+    padding: 8px;
+
+    border: 1px solid #eee;
+    border-radius: 12px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  .wl-navbar .dropdown-item {
+    padding: 10px 12px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+  }
+
+  .wl-navbar .dropdown-item:hover {
+    color: #fe424d;
+    background: #fff1f2;
+  }
+
+  /* TABLET AND MOBILE */
+
+  @media (max-width: 991.98px) {
+    .wl-navbar .container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #fff;
+    }
+
+    .wl-navbar .navbar-toggler {
+      margin-left: auto;
+    }
+
+    /* IMPORTANT: KEEP BOOTSTRAP COLLAPSE WORKING */
+    .wl-navbar .navbar-collapse:not(.show) {
+      display: none;
+    }
+
+    .wl-navbar .navbar-collapse.show {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+
+      flex-basis: 100%;
+      width: 100%;
+
+      padding-top: 16px;
+      margin-top: 12px;
+
+      border-top: 1px solid #eee;
+    }
+
+    /* EXPLORE */
+    .wl-explore-link {
+      align-self: flex-start;
+      padding-left: 0;
+      margin-bottom: 8px;
+    }
+
+    /* SEARCH */
+    .wl-search {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 8px 0 16px;
+    }
+
+    /* RIGHT ACTIONS */
+    .wl-nav-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+
+      width: 100%;
+      gap: 12px;
+
+      padding-top: 16px;
+      margin-left: 0;
+
+      border-top: 1px solid #eee;
+    }
+
+    .wl-host-btn {
+      width: 100%;
+    }
+
+    .wl-nav-actions .dropdown {
+      width: 100%;
+    }
+
+    .wl-account-btn {
+      width: 100%;
+      border-radius: 25px;
+    }
+  }
+
+  /* SMALL MOBILE */
+
+  @media (max-width: 480px) {
+    .wl-brand {
+      font-size: 1.25rem;
+    }
+
+    .wl-search {
+      height: 48px;
+      padding: 4px;
+    }
+
+    .wl-search-icon {
+      flex-basis: 34px;
+      font-size: 0.9rem;
+    }
+
+    .wl-search-input {
+      font-size: 0.8rem;
+      padding: 0 4px;
+    }
+
+    .wl-search-input::placeholder {
+      font-size: 0.76rem;
+    }
+
+    .wl-search-button {
+      height: 38px;
+      padding: 0 12px;
+      gap: 5px;
+      font-size: 0.8rem;
+    }
+  }
+
+  /* EXTRA SMALL MOBILE */
+
+  @media (max-width: 350px) {
+    .wl-search-button {
+      width: 40px;
+      padding: 0;
+    }
+
+    .wl-search-button span {
+      display: none;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg wl-navbar">
+  <div class="container">
+    <!-- BRAND -->
+    <a class="navbar-brand wl-brand" href="/listings">
+      <i class="fa-brands fa-airbnb me-1"></i>
+      Wanderlust
+    </a>
+
+    <!-- MOBILE TOGGLER -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#wlNavbarContent"
+      aria-controls="wlNavbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- NAVBAR CONTENT -->
+    <div class="collapse navbar-collapse" id="wlNavbarContent">
+      <!-- EXPLORE -->
+      <a class="wl-explore-link" href="/listings">
+        <i class="fa-solid fa-house me-2"></i>
+        Home
+      </a>
+
+      <!-- SEARCH BAR -->
+      <form class="wl-search" action="/listings" method="GET" role="search">
+        <div class="wl-search-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+
+        <input
+          class="wl-search-input"
+          type="search"
+          name="search"
+          id="wlSearchInput"
+          placeholder="Where do you want to go?"
+          aria-label="Search destinations or stays"
+          value="<%= typeof search !== 'undefined' ? search : '' %>"
+        />
+
+        <% if (typeof search !== 'undefined' && search) { %>
+        <a
+          href="/listings"
+          class="wl-search-clear"
+          aria-label="Clear search"
+          title="Clear search"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </a>
+        <% } %>
+
+        <button class="wl-search-button" type="submit" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>Search</span>
+        </button>
+      </form>
+
+      <!-- RIGHT NAVIGATION ACTIONS -->
+      <div class="wl-nav-actions">
+        <!-- LIST YOUR HOME -->
+        <a class="btn btn-outline-dark btn-sm wl-host-btn" href="/listings/new">
+          <i class="fa-solid fa-house me-1"></i>
+          List your home
+        </a>
+
+        <!-- ACCOUNT DROPDOWN -->
+        <div class="dropdown">
+          <button
+            class="wl-account-btn"
+            type="button"
+            id="wlAccountDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-label="Account menu"
+            title="Account"
+          >
+            <i class="fa-regular fa-circle-user"></i>
+          </button>
+
+          <ul
+            class="dropdown-menu dropdown-menu-end mt-2"
+            aria-labelledby="wlAccountDropdown"
+          >
+            <% if (!currUser) { %>
+
+            <li>
+              <a class="dropdown-item" href="/login">
+                <i class="fa-solid fa-right-to-bracket me-2"></i>
+                Log in
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="/signup">
+                <i class="fa-solid fa-user-plus me-2"></i>
+                Sign up
+              </a>
+            </li>
+
+            <% } else { %>
+
+            <li>
+              <a class="dropdown-item" href="/profile">
+                <i class="fa-regular fa-user me-2"></i>
+                My profile
+              </a>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+              <a class="dropdown-item" href="/logout">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                Log out
+              </a>
+            </li>
+
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

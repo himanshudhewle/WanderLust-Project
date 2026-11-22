@@ -1,0 +1,107 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <!-- Profile Card -->
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div
+              class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center"
+              style="width: 65px; height: 65px; font-size: 25px"
+            >
+              <%= user.username.charAt(0).toUpperCase() %>
+            </div>
+
+            <div>
+              <h4 class="fw-bold mb-1"><%= user.username %></h4>
+              <p class="text-muted small mb-0">Wanderlust Member</p>
+            </div>
+          </div>
+
+          <hr />
+
+          <h6 class="fw-bold mb-3">Personal Information</h6>
+
+          <p class="mb-2">
+            <strong>Username:</strong>
+            <%= user.username %>
+          </p>
+
+          <p class="mb-0">
+            <strong>Email:</strong>
+            <%= user.email || "Not provided" %>
+          </p>
+        </div>
+      </div>
+
+      <!-- My Listings -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0">My Listings</h5>
+
+        <span class="badge text-bg-dark">
+          <%= userListings.length %> Listings
+        </span>
+      </div>
+
+      <% if (userListings.length > 0) { %>
+
+      <div class="row g-3">
+        <% for (let listing of userListings) { %>
+
+        <div class="col-12 col-md-6">
+          <div class="card border-0 shadow-sm h-100">
+            <img
+              src="<%= listing.image.url %>"
+              class="card-img-top"
+              alt="<%= listing.title %>"
+              style="height: 180px; object-fit: cover"
+            />
+
+            <div class="card-body">
+              <h6 class="fw-bold"><%= listing.title %></h6>
+
+              <p class="text-muted small mb-2">
+                <i class="fa-solid fa-location-dot text-danger"></i>
+                <%= listing.location %>,
+                <%= listing.country %>
+              </p>
+
+              <p class="fw-semibold mb-3">
+                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+              </p>
+
+              <a
+                href="/listings/<%= listing._id %>"
+                class="btn btn-sm btn-outline-dark"
+              >
+                View Listing
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <% } %>
+      </div>
+
+      <% } else { %>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="fa-solid fa-house fa-2x text-muted mb-3"></i>
+
+          <h6 class="fw-bold">No Listings Yet</h6>
+
+          <p class="text-muted small">You haven't created any listings yet.</p>
+
+          <a href="/listings/new" class="btn btn-dark btn-sm">
+            Create Your First Listing
+          </a>
+        </div>
+      </div>
+
+      <% } %>
+    </div>
+  </div>
+</div>

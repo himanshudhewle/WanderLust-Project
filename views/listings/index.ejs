@@ -1,0 +1,440 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  /* Listing categories */
+  .explore-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 0 1rem;
+    border-bottom: 1px solid #ececec;
+  }
+
+  #filters {
+    display: flex;
+    align-items: center;
+    gap: 1.7rem;
+    min-width: 0;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d5d5d5 transparent;
+    padding: 0.25rem 0 0.8rem;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    min-width: 4.25rem;
+    text-align: center;
+    color: #717171;
+    opacity: 0.82;
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.2s ease;
+    display: block;
+    text-decoration: none;
+  }
+
+  .filter i {
+    display: block;
+    margin-bottom: 0.55rem;
+    font-size: 1.25rem;
+  }
+
+  .filter p {
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .filter:hover {
+    color: #fe424d;
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .filter.active {
+    color: #fe424d;
+    opacity: 1;
+    border-bottom: 2px solid #222;
+    padding-bottom: 0.65rem;
+  }
+
+  .tax-toggle {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    min-height: 3.1rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #dedede;
+    border-radius: 0.85rem;
+    background: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .tax-toggle .form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tax-toggle .form-check-input {
+    float: none;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .tax-toggle .form-check-label {
+    cursor: pointer;
+  }
+
+  /* Listing cards */
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .listing-link {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .listing-card {
+    height: 100%;
+    overflow: hidden;
+    border: 0;
+    border-radius: 1rem;
+    background: transparent;
+    transition: transform 0.22s ease;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .listing-image-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 1rem;
+    background: #f1f1f1;
+  }
+
+  .listing-card .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .listing-card:hover .card-img-top {
+    transform: scale(1.045);
+  }
+
+  .listing-card .card-img-overlay {
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), transparent 35%);
+  }
+
+  .listing-card .card-body {
+    padding: 0.85rem 0.15rem 0.2rem;
+  }
+
+  .listing-card .card-text {
+    margin: 0;
+    color: #555;
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .listing-card .listing-title {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 0.15rem;
+    color: #222;
+    font-size: 0.98rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .listing-price {
+    color: #222;
+    font-weight: 700;
+  }
+
+  .tax-info {
+    display: none;
+    color: #717171;
+    font-size: 0.83rem;
+    font-weight: 400;
+  }
+
+  .empty-listings {
+    grid-column: 1 / -1;
+    padding: 3rem 1rem;
+    border: 1px dashed #ddd;
+    border-radius: 1rem;
+    color: #717171;
+    text-align: center;
+  }
+
+  @media (max-width: 991.98px) {
+    .listings-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.7rem 1.1rem;
+    }
+
+    .explore-toolbar {
+      align-items: flex-start;
+    }
+
+    .tax-toggle {
+      margin-top: 0.15rem;
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    .explore-toolbar {
+      display: block;
+      padding-top: 0.9rem;
+    }
+
+    #filters {
+      gap: 1.35rem;
+      margin-right: -0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .tax-toggle {
+      display: inline-flex;
+      margin-top: 0.35rem;
+      min-height: 2.7rem;
+    }
+
+    .listings-grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.1rem;
+    }
+
+    .listing-image-wrap {
+      aspect-ratio: 5 / 4;
+    }
+
+    .listing-card .card-body {
+      padding-top: 0.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter,
+    .listing-card,
+    .listing-card .card-img-top {
+      transition: none;
+    }
+  }
+</style>
+
+<section class="explore-toolbar" aria-label="Explore listing categories">
+  <div id="filters">
+    <a
+      href="/listings"
+      class="filter <%= category === 'All stays' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-house me-2"></i>
+      <p>All stays</p>
+    </a>
+    <a
+      href="/listings?category=Trending"
+      class="filter <%= category === 'Trending' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-fire"></i>
+      <p>Trending</p>
+    </a>
+    <a
+      href="/listings?category=New"
+      class="filter <%= category === 'New' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-key"></i>
+      <p>New</p>
+    </a>
+    <a
+      href="/listings?category=Rooms"
+      class="filter <%= category === 'Rooms' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-bed"></i>
+      <p>Rooms</p>
+    </a>
+    <a
+      href="/listings?category=Iconic%20cities"
+      class="filter <%= category === 'Iconic cities' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-mountain-city"></i>
+      <p>Iconic cities</p>
+    </a>
+    <a
+      href="/listings?category=Beach%20Stays"
+      class="filter <%= category === 'Beach Stays' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-umbrella-beach"></i>
+      <p>Beach Stays</p>
+    </a>
+    <a
+      href="/listings?category=Mountains"
+      class="filter <%= category === 'Mountains' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-mountain"></i>
+      <p>Mountains</p>
+    </a>
+    <a
+      href="/listings?category=Castles"
+      class="filter <%= category === 'Castles' ? 'active' : '' %>"
+    >
+      <i class="fa-brands fa-fort-awesome"></i>
+      <p>Castles</p>
+    </a>
+    <a
+      href="/listings?category=Amazing%20pools"
+      class="filter <%= category === 'Amazing pools' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-person-swimming"></i>
+      <p>Amazing pools</p>
+    </a>
+    <a
+      href="/listings?category=Camping"
+      class="filter <%= category === 'Camping' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-tent"></i>
+      <p>Camping</p>
+    </a>
+    <a
+      href="/listings?category=Farms"
+      class="filter <%= category === 'Farms' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-tractor"></i>
+      <p>Farms</p>
+    </a>
+    <a
+      href="/listings?category=Arctic"
+      class="filter <%= category === 'Arctic' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-snowflake"></i>
+      <p>Arctic</p>
+    </a>
+    <a
+      href="/listings?category=Domes"
+      class="filter <%= category === 'Domes' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-igloo"></i>
+      <p>Domes</p>
+    </a>
+    <a
+      href="/listings?category=Temples"
+      class="filter <%= category === 'Temples' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-place-of-worship"></i>
+      <p>Temples</p>
+    </a>
+    <a
+      href="/listings?category=Cruises"
+      class="filter <%= category === 'Cruises' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-ship"></i>
+      <p>Cruises</p>
+    </a>
+    <a
+      href="/listings?category=Restaurants"
+      class="filter <%= category === 'Restaurants' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-utensils"></i>
+      <p>Restaurants</p>
+    </a>
+    <a
+      href="/listings?category=Cabins"
+      class="filter <%= category === 'Cabins' ? 'active' : '' %>"
+    >
+      <i class="fa-solid fa-house-chimney"></i>
+      <p>Cabins</p>
+    </a>
+  </div>
+
+  <div class="tax-toggle">
+    <div class="form-check form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="flexSwitchCheckDefault"
+        aria-label="Show prices including GST"
+      />
+      <label class="form-check-label" for="flexSwitchCheckDefault">
+        Include 18% GST
+      </label>
+    </div>
+  </div>
+</section>
+
+<div class="listings-grid">
+  <% if (allListings.length === 0) { %>
+  <div class="empty-listings">
+    <i class="fa-regular fa-compass fa-2x mb-3"></i>
+    <h5 class="mb-2">No stays found</h5>
+    <p class="mb-0">New places will appear here when they are available.</p>
+  </div>
+  <% } %>
+
+  <% for (let listing of allListings) { %>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <article class="card listing-card">
+      <div class="listing-image-wrap">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="<%= listing.title %>"
+          loading="lazy"
+        />
+        <div class="card-img-overlay"></div>
+      </div>
+      <div class="card-body">
+        <p class="card-text">
+          <span class="listing-title"><%= listing.title %></span>
+          <span class="listing-price">
+            &#8377;<%= listing.price.toLocaleString("en-IN") %>
+          </span>
+          <span>/ night</span>
+          <span class="tax-info"> · +18% GST</span>
+        </p>
+      </div>
+    </article>
+  </a>
+  <% } %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const taxSwitch = document.getElementById('flexSwitchCheckDefault');
+    const taxInfo = document.querySelectorAll('.tax-info');
+
+    if (taxSwitch) {
+      taxSwitch.addEventListener('change', () => {
+        taxInfo.forEach((info) => {
+          info.style.display = taxSwitch.checked ? 'inline' : 'none';
+        });
+      });
+    }
+  });
+</script>
